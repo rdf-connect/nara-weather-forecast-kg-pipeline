@@ -1,0 +1,48 @@
+@prefix sh:     <http://www.w3.org/ns/shacl#> .
+@prefix schema: <https://schema.org/> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+@prefix ex:     <http://example.org/> .
+
+ex:WeatherReportShape
+    a sh:NodeShape ;
+    sh:targetClass schema:Report ;  # apply to all instances of schema:Report
+
+    sh:property [
+        sh:path schema:headline ;
+        sh:minCount 1 ;
+    ] ;
+
+    sh:property [
+        sh:path schema:dateCreated ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+    ] ;
+
+    sh:property [
+        sh:path schema:publisher ;
+        sh:node [
+            sh:property [
+                sh:path schema:name ;
+                sh:minCount 1 ;
+            ] ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+        ] ;
+        sh:minCount 1 ;
+    ] ;
+
+    sh:property [
+        sh:path schema:text ;
+        sh:minCount 1 ;
+    ] ;
+
+    sh:property [
+        sh:path schema:spatialCoverage ;
+        sh:node [
+            sh:property [
+                sh:path schema:name ;
+                sh:minCount 1 ;
+            ] ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+        ] ;
+        sh:minCount 1 ;
+    ] .
