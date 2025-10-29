@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/rdf-connect/nara-weather-forecast-kg-pipeline",
   "dependencies": {
+    "@rdfc/file-utils-processors-ts": "^2.0.0-alpha.0",
     "@rdfc/http-utils-processor-ts": "^2.0.0-alpha.0",
     "@rdfc/js-runner": "^3.5.0-alpha.1",
     "@rdfc/log-processor-ts": "^3.0.0-alpha.0",
