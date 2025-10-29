@@ -26,7 +26,10 @@ Next, you can add the Python TranslationProcessor to your pipeline configuration
 # Define and configure the processor
 <translator> a rdfcp:TranslationProcessor;
       rdfcp:input <channel1>;
-      rdfcp:output <channel2>.
+      rdfcp:output <channel2>;
+      rdfcp:model "Helsinki-NLP/opus-mt-de-en";
+      rdfcp:sourceLanguage "de";
+      rdfcp:targetLanguage "en".
 ```
 
 ## Development

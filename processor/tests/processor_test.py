@@ -18,43 +18,53 @@ class DummyReader:
 
 
 @pytest.mark.asyncio
-async def test_transform_writes_and_closes_writer(caplog):
-    messages = ["hello", "world"]
-    reader = DummyReader(messages)
+async def test_translation_process(caplog):
+    reader = DummyReader(["<http://ex.org/instance> <http://ex.org/prop> \"hallo welt\"@de."])
     writer = AsyncMock()
 
-    args = processor.TranslationArgs(reader=reader, writer=writer)
+    args = processor.TranslationArgs(
+        reader=reader,
+        writer=writer,
+        model="Helsinki-NLP/opus-mt-de-en",
+        source_language="de",
+        target_language="en"
+    )
     proc = processor.TranslationProcessor(args)
+
+    # Mock translator to always return "hello world"
+    proc.translator = lambda text: [{"translation_text": "hello world"}]
 
     caplog.set_level(logging.DEBUG)
 
     await proc.transform()
 
-    # Writer should be called with each message
-    expected_calls = [((msg,),) for msg in messages]
     actual_calls = [call.args for call in writer.string.await_args_list]
-    assert actual_calls == [(msg,) for msg in messages]
+    assert any("hello world" in str(args).lower() for args in actual_calls)
 
-    # Writer.close should be called once
     writer.close.assert_awaited_once()
-
-    # Debug log at end should appear
     assert "done reading so closed writer." in caplog.text
 
 
 @pytest.mark.asyncio
-async def test_transform_without_writer(caplog):
-    messages = ["foo", "bar"]
-    reader = DummyReader(messages)
+async def test_empty_literals_are_not_translated():
+    reader = DummyReader(["<http://ex.org/instance> <http://ex.org/prop> \"\"@de."])
+    writer = AsyncMock()
 
-    args = processor.TranslationArgs(reader=reader, writer=None)
+    args = processor.TranslationArgs(
+        reader=reader,
+        writer=writer,
+        model="Helsinki-NLP/opus-mt-de-en",
+        source_language="de",
+        target_language="en"
+    )
     proc = processor.TranslationProcessor(args)
 
-    caplog.set_level(logging.INFO)
+    # Record what the translator is asked to translate
+    asked = []
+    proc.translator = lambda text: asked.append(text) or [{"translation_text": "I'm sorry."}]
 
-    # Should not raise even if writer is None
     await proc.transform()
 
-    # Should log incoming messages at INFO level
-    for msg in messages:
-        assert msg in caplog.text
+    assert asked == []
+    actual_calls = [call.args for call in writer.string.await_args_list]
+    assert not any("sorry" in str(args) for args in actual_calls)

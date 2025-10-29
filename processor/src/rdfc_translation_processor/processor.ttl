@@ -17,7 +17,7 @@ rdfcp:TranslationProcessor rdfc:pyImplementationOf rdfc:Processor;
         sh:path rdfcp:input;
         sh:codeIdentifier "reader";
         sh:name "Input channel";
-        sh:description "Input channel with the messages to log and forward.";
+        sh:description "Input channel with the RDF data whose literals to translate.";
         sh:minCount 1;
         sh:maxCount 1;
     ], [
@@ -25,7 +25,31 @@ rdfcp:TranslationProcessor rdfc:pyImplementationOf rdfc:Processor;
         sh:path rdfcp:output;
         sh:codeIdentifier "writer";
         sh:name "Output channel";
-        sh:description "Output channel to which every incoming message is forwarded.";
-        sh:minCount 0;
+        sh:description "Output channel with the RDF data, extended with the translated literals.";
+        sh:minCount 1;
+        sh:maxCount 1;
+    ], [
+        sh:datatype xsd:string;
+        sh:path rdfcp:model;
+        sh:codeIdentifier "model";
+        sh:name "Model";
+        sh:description "Name of the Hugging Face translation model, e.g. Helsinki-NLP/opus-mt-ja-en.";
+        sh:minCount 1;
+        sh:maxCount 1;
+    ], [
+        sh:datatype xsd:string;
+        sh:path rdfcp:sourceLanguage;
+        sh:codeIdentifier "source_language";
+        sh:name "Source language";
+        sh:description "Language tag of the literals to translate, e.g. ja.";
+        sh:minCount 1;
+        sh:maxCount 1;
+    ], [
+        sh:datatype xsd:string;
+        sh:path rdfcp:targetLanguage;
+        sh:codeIdentifier "target_language";
+        sh:name "Target language";
+        sh:description "Language tag of the translations, e.g. en.";
+        sh:minCount 1;
         sh:maxCount 1;
     ].
