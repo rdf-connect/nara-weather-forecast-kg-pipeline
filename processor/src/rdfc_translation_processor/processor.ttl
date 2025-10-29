@@ -21,6 +21,24 @@ rdfc:TranslationProcessor rdfc:pyImplementationOf rdfc:Processor;
         sh:class rdfc:Writer;
         sh:path rdfc:writer;
         sh:name "writer";
-        sh:minCount 0;
+        sh:minCount 1;
+        sh:maxCount 1;
+    ], [
+        sh:datatype xsd:string;
+        sh:path rdfc:model;
+        sh:name "model";
+        sh:minCount 1;
+        sh:maxCount 1;
+    ], [
+        sh:datatype xsd:string;
+        sh:path rdfc:sourceLanguage;
+        sh:name "source_language";
+        sh:minCount 1;
+        sh:maxCount 1;
+    ], [
+        sh:datatype xsd:string;
+        sh:path rdfc:targetLanguage;
+        sh:name "target_language";
+        sh:minCount 1;
         sh:maxCount 1;
     ].
