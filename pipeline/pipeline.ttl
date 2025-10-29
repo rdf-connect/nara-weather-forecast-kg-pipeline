@@ -1,0 +1,20 @@
+@prefix rdfc: <https://w3id.org/rdf-connect#>.
+@prefix rdfcp: <https://w3id.org/rdf-connect/processors#>.
+@prefix owl: <http://www.w3.org/2002/07/owl#>.
+@prefix ex: <http://example.org/>.
+
+
+### Import runners and processors
+
+
+
+### Define the channels
+
+
+
+### Define the pipeline
+<> a rdfc:Pipeline.
+
+
+### Define the processors
+
