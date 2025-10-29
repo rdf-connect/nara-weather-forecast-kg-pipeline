@@ -713,7 +713,7 @@ wheels = [
 ]
 
 [[package]]
-name = "rdfc-template-processor"
+name = "rdfc-translation-processor"
 version = "0.0.1"
 source = { editable = "." }
 dependencies = [
