@@ -141,7 +141,7 @@ Configure the pipeline to fetch weather data from Japan Meteorological Agency (a
 
 **Steps:**
 
-- [ ] Add an `rdfcp:HttpFetch` processor instance
+- [x] Add an `rdfcp:HttpFetch` processor instance
   - Install the processor
     ```bash
     npm install @rdfc/http-utils-processor-ts@alpha
@@ -164,7 +164,7 @@ Configure the pipeline to fetch weather data from Japan Meteorological Agency (a
         rdfcp:url <https://www.jma.go.jp/bosai/forecast/data/overview_forecast/290000.json>;
         rdfcp:output <json>.
     ```
-- [ ] Add an `rdfc:NodeRunner` Node.js runner instance
+- [x] Add an `rdfc:NodeRunner` Node.js runner instance
   - Install the runner
     ```bash
     npm install @rdfc/js-runner@alpha
@@ -183,7 +183,7 @@ Configure the pipeline to fetch weather data from Japan Meteorological Agency (a
          rdfc:processor <fetcher>;
      ].
     ```
-- [ ] Add a `rdfcp:LogProcessorJs` processor instance
+- [x] Add a `rdfcp:LogProcessorJs` processor instance
   - Install the processor
     ```bash
     npm install @rdfc/log-processor-ts@alpha
@@ -211,7 +211,7 @@ Configure the pipeline to fetch weather data from Japan Meteorological Agency (a
            rdfc:processor <fetcher>, <logger>;
        ].
     ```
-- [ ] Run the pipeline:  
+- [x] Run the pipeline:  
   ```bash
   npx rdfc pipeline.ttl
   # or with debug logging:
