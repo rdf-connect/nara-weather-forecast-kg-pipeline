@@ -22,6 +22,7 @@
     "@rdfc/js-runner": "^3.5.0-alpha.1",
     "@rdfc/log-processor-ts": "^3.0.0-alpha.0",
     "@rdfc/orchestrator-js": "^3.0.0-alpha.1",
-    "@rdfc/shacl-processor-ts": "^2.0.0-alpha.0"
+    "@rdfc/shacl-processor-ts": "^2.0.0-alpha.0",
+    "@rdfc/sparql-ingest-processor-ts": "^3.0.0-alpha.0"
   }
 }

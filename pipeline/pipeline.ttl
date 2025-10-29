@@ -13,6 +13,7 @@
 <> owl:imports <./node_modules/@rdfc/file-utils-processors-ts/processors.ttl>.
 <> owl:imports <./build/plugins/rml-processor-jvm-refactor~processor-shapes-SNAPSHOT-all.jar>.
 <> owl:imports <./node_modules/@rdfc/shacl-processor-ts/processors.ttl>.
+<> owl:imports <./node_modules/@rdfc/sparql-ingest-processor-ts/processors.ttl>.
 
 
 ### Define the channels
@@ -21,13 +22,14 @@
 <rdf> a rdfc:Reader, rdfc:Writer.
 <validated> a rdfc:Reader, rdfc:Writer.
 <report> a rdfc:Reader, rdfc:Writer.
+<sparql> a rdfc:Reader, rdfc:Writer.
 
 
 ### Define the pipeline
 <> a rdfc:Pipeline;
    rdfc:consistsOf [
        rdfc:instantiates rdfc:NodeRunner;
-       rdfc:processor <fetcher>, <logger>, <mappingReader>, <validator>, <reporter>;
+       rdfc:processor <fetcher>, <logger>, <mappingReader>, <validator>, <reporter>, <ingester>;
    ], [
        rdfc:instantiates rdfc:JvmRunner;
        rdfc:processor <mapper>;
@@ -74,8 +76,18 @@
       rdfcp:level "warn";
       rdfcp:label "report".
 
+# Processor to ingest RDF data into a SPARQL endpoint
+<ingester> a rdfcp:SPARQLIngest;
+    rdfcp:input <validated>;
+    rdfcp:ingestConfig [
+        rdfcp:targetNamedGraph "http://ex.org/ViennaWeather";
+        rdfcp:graphStoreUrl "http://virtuoso:8890/sparql";  # virtuoso if using docker-compose, localhost if endpoint is local
+        rdfcp:forVirtuoso true
+    ];
+    rdfcp:output <sparql>.
+
 # Processor to log the output
 <logger> a rdfcp:LogProcessorJs;
-      rdfcp:input <validated>;
+      rdfcp:input <sparql>;
       rdfcp:level "info";
       rdfcp:label "output".
